@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Game Over!");
         score = 0;
         health = 5;
-        ScenceManager.LoadScene(SceneManager.GetActiveScence().name);
+        ScenceManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
 
