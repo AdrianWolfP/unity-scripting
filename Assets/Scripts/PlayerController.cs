@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
+    private int score = 0;
+    public int health = 5;
     private Rigidbody playerRigidBody;
     void Start()
     {
@@ -21,10 +23,42 @@ public class PlayerController : MonoBehaviour
         playerRigidBody.AddForce(movement * speed);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Pickup"))
+        {
+            score++;
+            Debug.Log("Score: " + score);
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("Trap"))
+        {
+            health--;
+            Debug.Log("Health: " + health);
 
+            if (health <= 0)
+            {
+                GameOver();
+            }
+        }
+        else if (other.CompareTag("Goal"))
+        {
+            Debug.Log("You win!");
+        }
+    }
+    private void Update()
+    {
+        if (health <= 0)
+        {
+            GameOver();
+        }
+    }
+    private void GameOver()
+    {
+        Debug.Log("Game Over!");
+        score = 0;
+        health = 5;
+        ScenceManager.LoadScene(SceneManager.GetActiveScence().name);
     }
 }
 
